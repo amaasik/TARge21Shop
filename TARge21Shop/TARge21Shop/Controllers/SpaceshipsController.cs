@@ -71,7 +71,7 @@ namespace TARge21Shop.Controllers
                 Files = vm.Files,
                 Image = vm.Image.Select(x => new FileToDatabaseDto
                 {
-                    Id = x.Id,
+                    
 					Id = x.ImageId,
 					ImageData = x.ImageData,
                     ImageTitle = x.ImageTitle,
