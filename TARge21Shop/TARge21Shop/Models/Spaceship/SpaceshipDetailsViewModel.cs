@@ -14,9 +14,9 @@
         public int EnginePower { get; set; }
         public DateTime MaidenLaunch { get; set; }
         public DateTime BuiltDate { get; set; }
-
-        // only in database
-        public DateTime CreatedAt { get; set; }
+		public List<ImageViewModel> Image { get; set; } = new List<ImageViewModel>();
+		// only in database
+		public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt { get; set; }
     }
 }
