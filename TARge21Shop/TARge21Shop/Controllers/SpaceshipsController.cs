@@ -230,6 +230,16 @@ namespace TARge21Shop.Controllers
             {
                 return NotFound();
             }
+            var photos = await _context.FileToDatabases
+                .Where(x => x.SpaceshipId == id)
+                .Select(y => new ImageViewModel
+                {
+                    SpaceshipId = y.Id,
+                    ImageId = y.Id,
+                    ImageData = y.ImageData,
+                    ImageTitle = y.ImageTitle,
+                    Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(y.ImageData))
+                }).ToArrayAsync();
 
             var vm = new SpaceshipDeleteViewModel()
             {
@@ -246,8 +256,9 @@ namespace TARge21Shop.Controllers
                 MaidenLaunch = spaceship.MaidenLaunch,
                 BuiltDate = spaceship.BuiltDate,
                 CreatedAt = spaceship.CreatedAt,
-                ModifiedAt = spaceship.ModifiedAt
-            };
+                ModifiedAt = spaceship.ModifiedAt,
+                vm.Image.AddRange(photos);
+        
 
             return View(vm);
         }
