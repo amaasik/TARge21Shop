@@ -1,95 +1,97 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TARge21Shop.Core.Domain;
+using TARge21Shop.Core.Domain.Car;
 using TARge21Shop.Core.Dto;
+using TARge21Shop.Core.ServiceInterface;
 using TARge21Shop.Data;
 
 namespace TARge21Shop.ApplicationServices.Services
 {
-	public class CarsServices
-	{
-		private readonly TARge21ShopContext _context;
-		public CarsServices
-			(
-			TARge21ShopContext context
-			)
-		{
-			_context = context;
-		}
+    public class CarsServices : ICarServices
+    {
+        private readonly TARge21ShopContext _context;
 
-		public async Task<Car> Add(CarDto dto)
-		{
-			var domain = new Car()
-			{
-				Id = Guid.NewGuid(),
-				Brand = dto.Brand,
-				Model = dto.Model,
-				Color = dto.Color,
-				FuelType = dto.FuelType,
-				Price = dto.Price,
-				EnginePower = dto.EnginePower,
-				Mileage = dto.Mileage,
-				BuiltDate = DateTime.Now,
-				MaintanceDate = DateTime.Now
-			};
+        public CarsServices
+            (
+                TARge21ShopContext context
+            )
+        {
+            _context = context;
+        }
 
-			await _context.Cars.AddAsync(domain);
-			await _context.SaveChangesAsync();
+        public async Task<Car> Add(CarDto dto)
+        {
+            var domain = new Car()
+            {
+                Id = Guid.NewGuid(),
+                Brand = dto.Brand,
+                Type = dto.Type,
+                Model = dto.Model,
+                Color = dto.Color,
+                Price = dto.Price,
+                HorsePower = dto.HorsePower,
+                Weight = dto.Weight,
+                BuiltDate = dto.BuiltDate,
+                LastMaintenance = dto.LastMaintenance,
+                CreatedAt = DateTime.Now,
+                ModifiedAt = DateTime.Now,
+            };
 
-			return domain;
-		}
+            await _context.Cars.AddAsync(domain);
+            await _context.SaveChangesAsync();
 
-		public async Task<Car> Update(CarDto dto)
-		{
-			var domain = new Car()
-			{
-				Id = dto.Id,
-				Brand = dto.Brand,
-				Model = dto.Model,
-				Color = dto.Color,
-				FuelType = dto.FuelType,
-				Price = dto.Price,
-				EnginePower = dto.EnginePower,
-				Mileage = dto.Mileage,
-				BuiltDate = dto.BuiltDate,
-				MaintanceDate = dto.MaintanceDate
-			};
+            return domain;
+        }
 
-			_context.Cars.Update(domain);
-			await _context.SaveChangesAsync();
-			return domain;
+        public async Task<Car> Update(CarDto dto)
+        {
+            var domain = new Car()
+            {
+                Id = dto.Id,
+                Brand = dto.Brand,
+                Type = dto.Type,
+                Model = dto.Model,
+                Color = dto.Color,
+                Price = dto.Price,
+                HorsePower = dto.HorsePower,
+                Weight = dto.Weight,
+                BuiltDate = dto.BuiltDate,
+                LastMaintenance = dto.LastMaintenance,
+                CreatedAt = dto.CreatedAt,
+                ModifiedAt = DateTime.Now,
+            };
 
+            _context.Cars.Update(domain);
+            await _context.SaveChangesAsync();
 
-		}
-		public async Task<Car> GetUpdate(Guid id)
-		{
-			var result = await _context.Cars
-				.FirstOrDefaultAsync(x => x.Id == id);
+            return domain;
+        }
 
-			return result;
-		}
+        public async Task<Car> GetUpdate(Guid id)
+        {
+            var result = await _context.Cars
+                .FirstOrDefaultAsync(x => x.Id == id);
 
-		public async Task<Car> Delete(Guid id)
-		{
-			var carId = await _context.Cars
-				.FirstOrDefaultAsync(x => x.Id == id);
+            return result;
+        }
 
-			_context.Cars.Remove(carId);
-			await _context.SaveChangesAsync();
+        public async Task<Car> Delete(Guid id)
+        {
+            var carId = await _context.Cars
+                .FirstOrDefaultAsync(x => x.Id == id);
 
-			return carId;
-		}
+            _context.Cars.Remove(carId);
+            await _context.SaveChangesAsync();
 
-		public async Task<Car> GetAsync(Guid id)
-		{
-			var result = await _context.Cars
-				.FirstOrDefaultAsync(x => x.Id == id);
+            return carId;
+        }
 
-			return result;
-		}
-	}
+        public async Task<Car> GetAsync(Guid id)
+        {
+            var result = await _context.Cars
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            return result;
+        }
+    }
 }

@@ -1,6 +1,6 @@
 ﻿namespace TARge21Shop.Models.Spaceship
 {
-    public class SpaceshipCreateUpdateViewModel
+    public class SpaceshipEditViewModel
     {
         public Guid? Id { get; set; }
         public string Name { get; set; }
@@ -18,8 +18,5 @@
         // only in database
         public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt { get; set; }
-
-        public List<IFormFile> Files { get; set; }
-        public List<ImageViewModel> Image { get; set; } = new List<ImageViewModel>();
     }
 }

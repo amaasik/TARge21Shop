@@ -6,15 +6,15 @@ using TARge21Shop.Models.Car;
 
 namespace TARge21Shop.Controllers
 {
-    public class CarsController1 : Controller
+    public class CarsController : Controller
     {
         private readonly TARge21ShopContext _context;
-        private readonly ICarsServices _carsServices;
+        private readonly ICarServices _carsServices;
 
-        public CarsController1
+        public CarsController
             (
                 TARge21ShopContext context,
-                ICarsServices carsServices
+                ICarServices carsServices
             )
         {
             _context = context;
@@ -24,46 +24,47 @@ namespace TARge21Shop.Controllers
         public IActionResult Index()
         {
             var result = _context.Cars
-                .OrderByDescending(y => y.BuiltDate)
+                .OrderByDescending(y => y.CreatedAt)
                 .Select(x => new CarIndexViewModel
                 {
                     Id = x.Id,
                     Brand = x.Brand,
+                    Type = x.Type,
                     Model = x.Model,
                     Color = x.Color,
-                    FuelType = x.FuelType,
                     Price = x.Price,
-                    EnginePower = x.EnginePower,
-                    Mileage = x.Mileage,
-                    BuiltDate= x.BuiltDate,
-                    MaintanceDate= x.MaintanceDate,
+                    HorsePower = x.HorsePower,
+                    Weight = x.Weight
                 });
 
             return View(result);
         }
+
         [HttpGet]
         public IActionResult Add()
         {
-            CarCreateUpdateViewModel car = new CarCreateUpdateViewModel();
+            CarEditViewModel car = new CarEditViewModel();
 
-            return View("CreateUpdate", car);
+            return View("Edit", car);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(CarCreateUpdateViewModel vm)
+        public async Task<IActionResult> Add(CarEditViewModel vm)
         {
             var dto = new CarDto()
             {
                 Id = vm.Id,
                 Brand = vm.Brand,
+                Type = vm.Type,
                 Model = vm.Model,
                 Color = vm.Color,
-                FuelType = vm.FuelType,
                 Price = vm.Price,
-                EnginePower = vm.EnginePower,
-                Mileage = vm.Mileage,
+                HorsePower = vm.HorsePower,
+                Weight = vm.Weight,
                 BuiltDate = vm.BuiltDate,
-                MaintanceDate = vm.MaintanceDate,
+                LastMaintenance = vm.LastMaintenance,
+                CreatedAt = vm.CreatedAt,
+                ModifiedAt = vm.ModifiedAt
             };
 
             var result = await _carsServices.Add(dto);
@@ -86,39 +87,44 @@ namespace TARge21Shop.Controllers
                 return NotFound();
             }
 
-            var vm = new CarCreateUpdateViewModel()
+            var vm = new CarEditViewModel()
             {
                 Id = car.Id,
                 Brand = car.Brand,
+                Type = car.Type,
                 Model = car.Model,
                 Color = car.Color,
-                FuelType = car.FuelType,
                 Price = car.Price,
-                EnginePower = car.EnginePower,
-                Mileage = car.Mileage,
+                HorsePower = car.HorsePower,
+                Weight = car.Weight,
                 BuiltDate = car.BuiltDate,
-                MaintanceDate = car.MaintanceDate,
+                LastMaintenance = car.LastMaintenance,
+                CreatedAt = car.CreatedAt,
+                ModifiedAt = car.ModifiedAt
             };
 
             return View(vm);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(CarCreateUpdateViewModel vm)
+        public async Task<IActionResult> Update(CarEditViewModel vm)
         {
             var dto = new CarDto()
             {
                 Id = vm.Id,
                 Brand = vm.Brand,
+                Type = vm.Type,
                 Model = vm.Model,
                 Color = vm.Color,
-                FuelType = vm.FuelType,
                 Price = vm.Price,
-                EnginePower = vm.EnginePower,
-                Mileage = vm.Mileage,
+                HorsePower = vm.HorsePower,
+                Weight = vm.Weight,
                 BuiltDate = vm.BuiltDate,
-                MaintanceDate = vm.MaintanceDate,
+                LastMaintenance = vm.LastMaintenance,
+                CreatedAt = vm.CreatedAt,
+                ModifiedAt = vm.ModifiedAt
             };
+
             var result = await _carsServices.Update(dto);
 
             if (result == null)
@@ -127,18 +133,6 @@ namespace TARge21Shop.Controllers
             }
 
             return RedirectToAction(nameof(Index), vm);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> DeleteConfirmation(Guid id)
-        {
-            var carId = await _carsServices.Delete(id);
-            if (carId == null)
-            {
-                return RedirectToAction(nameof(Index));
-            }
-
-            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
@@ -155,14 +149,16 @@ namespace TARge21Shop.Controllers
             {
                 Id = car.Id,
                 Brand = car.Brand,
+                Type = car.Type,
                 Model = car.Model,
                 Color = car.Color,
-                FuelType = car.FuelType,
                 Price = car.Price,
-                EnginePower = car.EnginePower,
-                Mileage = car.Mileage,
+                HorsePower = car.HorsePower,
+                Weight = car.Weight,
                 BuiltDate = car.BuiltDate,
-                MaintanceDate = car.MaintanceDate,
+                LastMaintenance = car.LastMaintenance,
+                CreatedAt = car.CreatedAt,
+                ModifiedAt = car.ModifiedAt
             };
 
             return View(vm);
@@ -182,17 +178,26 @@ namespace TARge21Shop.Controllers
             {
                 Id = car.Id,
                 Brand = car.Brand,
+                Type = car.Type,
                 Model = car.Model,
                 Color = car.Color,
-                FuelType = car.FuelType,
                 Price = car.Price,
-                EnginePower = car.EnginePower,
-                Mileage = car.Mileage,
+                HorsePower = car.HorsePower,
+                Weight = car.Weight,
                 BuiltDate = car.BuiltDate,
-                MaintanceDate = car.MaintanceDate,
+                LastMaintenance = car.LastMaintenance,
+                CreatedAt = car.CreatedAt,
+                ModifiedAt = car.ModifiedAt
             };
 
             return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmation(Guid id)
+        {
+            var carId = await _carsServices.Delete(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿@model TARge21Shop.Models.Spaceship.SpaceshipCreateUpdateViewModel
-
+﻿@model TARge21Shop.Models.Spaceship.SpaceshipEditViewModel
 
 @if (Model.Id.HasValue)
 {
@@ -7,9 +6,8 @@
 }
 else
 {
-    <h1>Create</h1>
+    <h1>Add</h1>
 }
-
 
 <div>
     <form method="post" enctype="multipart/form-data">
@@ -65,24 +63,28 @@ else
                 <input asp-for="MaintenanceCount" class="form-control" />
             </div>
         </div>
+
         <div class="form-group row">
             <label asp-for="LastMaintenance" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
                 <input asp-for="LastMaintenance" class="form-control" />
             </div>
         </div>
+
         <div class="form-group row">
             <label asp-for="EnginePower" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
                 <input asp-for="EnginePower" class="form-control" />
             </div>
         </div>
+
         <div class="form-group row">
             <label asp-for="MaidenLaunch" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
                 <input asp-for="MaidenLaunch" class="form-control" />
             </div>
         </div>
+
         <div class="form-group row">
             <label asp-for="BuiltDate" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
@@ -91,23 +93,15 @@ else
         </div>
         <hr />
 
-        @foreach (var images in Model.Image)
-        {
-            <partial name="_Images" model="images" />
-        }
-
-        <hr/>
-
         @if (Model.Id.HasValue)
         {
-            <input asp-action="update" asp-controller="spaceships" type="submit" class=" btn btn-primary" value="Update" />
+            <input asp-action="Update" asp-controller="spaceships" type="submit" class=" btn btn-primary" value="Update" />
         }
         else
         {
-            <input asp-action="create" asp-controller="spaceships" type="submit" class=" btn btn-primary" value="Create" />
+            <input asp-action="add" asp-controller="spaceships" type="submit" class=" btn btn-primary" value="Add" />
         }
 
         <a asp-action="index" class="btn btn-primary">Back</a>
-
     </form>
 </div>

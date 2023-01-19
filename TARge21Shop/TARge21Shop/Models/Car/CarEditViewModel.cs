@@ -1,6 +1,6 @@
-﻿namespace TARge21Shop.Core.Dto
+﻿namespace TARge21Shop.Models.Car
 {
-    public class CarDto
+    public class CarEditViewModel
     {
         public Guid? Id { get; set; }
         public string Brand { get; set; }
