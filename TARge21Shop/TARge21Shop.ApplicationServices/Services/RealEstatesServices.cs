@@ -12,7 +12,7 @@ using TARge21Shop.Data;
 namespace TARge21Shop.ApplicationServices.Services
 {
    
-    public class RealEstatesServices : IRealEstates
+    public class RealEstatesServices : IRealEstatesServices
     {
         private readonly TARge21ShopContext _context;
 
@@ -23,12 +23,12 @@ namespace TARge21Shop.ApplicationServices.Services
         {
             _context= context;
         }
-        public async Task<RealEstate>GetAsync(Guid id)
+        public async Task<RealEstate>GetAsync()
         {
-            var result=await _context.RealEstates
-                .FirstOrDefaultAsync(x => x.Id == id);
+            //var result = await _context.RealEstates
+            //    .;
 
-            return result;
+            return null;
         }
         public async Task<RealEstate>Create(RealEstateDto dto)
         {
