@@ -1,6 +1,6 @@
 ﻿namespace TARge21Shop.Models.Car
 {
-    public class CarEditViewModel
+    public class CarCreateUpdateViewModel
     {
         public Guid? Id { get; set; }
         public string Brand { get; set; }
@@ -16,5 +16,8 @@
         // only in database
         public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt { get; set; }
+
+        public List<IFormFile> Files { get; set; }
+        public List<ImageViewModel> Image { get; set; } = new List<ImageViewModel>();
     }
 }

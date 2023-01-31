@@ -9,7 +9,7 @@ namespace TARge21Shop.Data
         public TARge21ShopContext(DbContextOptions<TARge21ShopContext> options)
         : base(options) { }
 
-        public DbSet<Spaceship> Spaceships { get; set; }
         public DbSet<Car> Cars { get; set; }
+        public DbSet<FileToDatabase> FileToDatabases { get; set; }
     }
 }

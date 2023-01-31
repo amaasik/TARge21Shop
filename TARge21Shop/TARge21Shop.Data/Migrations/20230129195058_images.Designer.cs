@@ -12,8 +12,8 @@ using TARge21Shop.Data;
 namespace TARge21Shop.Data.Migrations
 {
     [DbContext(typeof(TARge21ShopContext))]
-    [Migration("20230119171531_cars")]
-    partial class cars
+    [Migration("20230129195058_images")]
+    partial class images
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -72,56 +72,26 @@ namespace TARge21Shop.Data.Migrations
                     b.ToTable("Cars");
                 });
 
-            modelBuilder.Entity("TARge21Shop.Core.Domain.Spaceship", b =>
+            modelBuilder.Entity("TARge21Shop.Core.Domain.FileToDatabase", b =>
                 {
-                    b.Property<Guid?>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("BuiltDate")
-                        .HasColumnType("datetime2");
+                    b.Property<Guid?>("CarId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("CargoWeight")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Crew")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EnginePower")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FullTripsCount")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("LastMaintenance")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("MaidenLaunch")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("MaintenanceCount")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ModifiedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
+                    b.Property<byte[]>("ImageData")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varbinary(max)");
 
-                    b.Property<int>("Passengers")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Type")
+                    b.Property<string>("ImageTitle")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Spaceships");
+                    b.ToTable("FileToDatabases");
                 });
 #pragma warning restore 612, 618
         }
