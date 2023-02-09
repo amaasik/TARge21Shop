@@ -1,9 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using TARge21Shop.Core.Domain;
 using TARge21Shop.Core.Dto;
 using TARge21Shop.Core.ServiceInterface;
@@ -15,13 +11,17 @@ namespace TARge21Shop.ApplicationServices.Services
     public class RealEstatesServices : IRealEstatesServices
     {
         private readonly TARge21ShopContext _context;
+        private readonly IFilesServices _filesServices;
 
         public RealEstatesServices
             (
-            TARge21ShopContext context
+            TARge21ShopContext context,
+            IFilesServices filesServices
+            
             )
         {
             _context= context;
+            _filesServices = filesServices;
         }
         public async Task<RealEstate> GetAsync(Guid id)
         {
@@ -48,6 +48,7 @@ namespace TARge21Shop.ApplicationServices.Services
             realEstate.RoomCount= dto.RoomCount;
             realEstate.CreatedAt= DateTime.Now;
             realEstate.ModifiedAt= DateTime.Now;
+            _filesServices.FilesToApi(dto, realEstate);
 
             await _context.RealEstates.AddAsync(realEstate);
             await _context.SaveChangesAsync();

@@ -13,6 +13,7 @@ namespace TARge21Shop.Core.ServiceInterface
         void UploadFilesToDatabase(SpaceshipDto dto, Spaceship domain);
         Task<FileToDatabase> RemoveImage(FileToDatabaseDto dto);
         Task<List<FileToDatabase>> RemoveImagesFromDatabase(FileToDatabaseDto[] dtos);
+        void FilesToApi(RealEstateDto dto, RealEstate realEstate);
 
 
     }
