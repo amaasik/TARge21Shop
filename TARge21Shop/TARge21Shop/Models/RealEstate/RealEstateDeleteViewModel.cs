@@ -16,7 +16,7 @@ namespace TARge21Shop.Models.RealEstate
         public int Floor { get; set; }
         public int Price { get; set; }
         public int RoomCount { get; set; }
-        public List<ImageViewModel> Image { get; set; } = new List<ImageViewModel>();
+        public List<FileToApiViewModel> FileToApiViewModels { get; set; } = new List<FileToApiViewModel>();
 
         // only in database
         public DateTime CreatedAt { get; set; }

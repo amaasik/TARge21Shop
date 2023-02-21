@@ -79,11 +79,11 @@
     </dl>
 </div>
 
-@*<hr />
-@foreach (var images in Model.Image)
+<hr />
+@foreach (var images in Model.FileToApiViewModels)
 {
     <partial name="_Images" model="images" />
-}*@
+}
 <hr />
 
 <a asp-action="index" class="btn btn-primary">Back</a>

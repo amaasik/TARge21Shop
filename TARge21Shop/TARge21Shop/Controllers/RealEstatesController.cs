@@ -12,16 +12,19 @@ namespace TARge21Shop.Controllers
     {
         private readonly IRealEstatesServices _realEstatesServices;
         private readonly TARge21ShopContext _context;
+		private readonly IFilesServices _filesServices;
 
-        public RealEstatesController
+		public RealEstatesController
             (
                 IRealEstatesServices realEstatesServices,
-                TARge21ShopContext context
-            )
+                TARge21ShopContext context,
+				IFilesServices filesServices
+			)
         {
             _realEstatesServices = realEstatesServices;
             _context = context;
-        }
+			_filesServices = filesServices;
+		}
 
 
         [HttpGet]
@@ -147,15 +150,15 @@ namespace TARge21Shop.Controllers
                 RoomCount = vm.RoomCount,
                 CreatedAt = vm.CreatedAt,
                 ModifiedAt = vm.ModifiedAt,
-                //Files = vm.Files,
-                //Image = vm.Image.Select(x => new FileToDatabaseDto
-                //{
-                //    Id = x.ImageId,
-                //    ImageData = x.ImageData,
-                //    ImageTitle = x.ImageTitle,
-                //    RealEstateId = x.RealEstateId,
-                //}).ToArray()
-            };
+				Files = vm.Files,
+				FileToApiDtos = vm.FileToApiViewModels
+					.Select(x => new FileToApiDto
+					{
+						Id = x.ImageId,
+						ExistingFilePath = x.FilePath,
+						RealEstateId = x.RealEstateId
+					}).ToArray()
+			};
 
             var result = await _realEstatesServices.Update(dto);
 
@@ -256,14 +259,22 @@ namespace TARge21Shop.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> RemoveImage(ImageViewModel file)
-        //{
-        //    var dto = new FileToDatabaseDto() { Id = file.ImageId };
-        //    var image = await _filesServices.RemoveImage(dto);
+		[HttpPost]
+		public async Task<IActionResult> RemoveImage(FileToApiViewModel vm)
+		{
+			var dto = new FileToApiDto()
+			{
+				Id = vm.ImageId
+			};
 
-        //    return RedirectToAction(nameof(Index));
-        //     return View("CreateUpdate", new { id = file.RealEstateId });
-        //}
-    }
+			var image = await _filesServices.RemoveImageFromApi(dto);
+
+			if (image == null)
+			{
+				return RedirectToAction(nameof(Index));
+			}
+
+			return RedirectToAction(nameof(Index));
+		}
+	}
 }
