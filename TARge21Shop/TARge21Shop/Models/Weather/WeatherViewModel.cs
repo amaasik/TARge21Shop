@@ -5,13 +5,20 @@
         public DateTime Date { get; set; }
         public int EpochDate { get; set; }
         public Temperatures Temperature { get; set; }
-        public DayCycles DayCycle { get; set; }
+        public DayNightCycles DayCycle { get; set; }
+        public DayNightCycles NightCycle { get; set; }
+
         public List<string> Sources { get; set; }
         public string MobileLink { get; set; }
         public string Link { get; set; }
+        public int Severity { get; set; }
+
+        public string Text { get; set; }
+        public string Category { get; set; }
+        
     }
 
-    public class DayCycles
+    public class DayNightCycles
     {
         public int Icon { get; set; }
         public string IconPhrase { get; set; }

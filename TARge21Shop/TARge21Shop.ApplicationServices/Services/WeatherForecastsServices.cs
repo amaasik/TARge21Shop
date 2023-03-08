@@ -7,13 +7,15 @@ using System.Text;
 using System.Threading.Tasks;
 using TARge21Shop.Core.Dto;
 using TARge21Shop.Core.Dto.WeatherDtos;
+using TARge21Shop.Core.ServiceInterface;
 
 namespace TARge21Shop.ApplicationServices.Services
 {
-    public class WeatherForecastServices
+    public class WeatherForecastServices : IWeatherForecastServices
     {
-        public async Task<WeaterResultDto> WeatherDetail(WeaterResultDto dto)
+        public async Task<WeatherResultDto> WeatherDetail(WeatherResultDto dto)
         {
+            //tallinna kood 127964
             string apikey = "qtPfgAahJibfaWqT9zbupu8qaAxrvIZ2";
             var url = $"http://dataservice.accuweather.com/forecasts/v1/daily/1day/";
 
@@ -25,21 +27,21 @@ namespace TARge21Shop.ApplicationServices.Services
 
                 WeatherRootDto weatherInfo = (new JavaScriptSerializer()).Deserialize<WeatherRootDto>(json);
 
-                    weatherInfo.Headline.EffectiveDate = dto.EffectiveDate;
-                    weatherInfo.Headline.EffectiveEpochDate = dto.EffectiveEpochDate;
-                    weatherInfo.Headline.Severity = dto.Severity;
-                    weatherInfo.Headline.Text = dto.Text;
-                    weatherInfo.Headline.Category = dto.Category;
-                    weatherInfo.Headline.EndDate = dto.EndDate;
-                    weatherInfo.Headline.EndEpochDate = dto.EndEpochDate;
+                dto.EffectiveDate= weatherInfo.Headline.EffectiveDate;
+                dto.EffectiveEpochDate= weatherInfo.Headline.EffectiveEpochDate;
+                dto.Severity= weatherInfo.Headline.Severity;
+                dto.Text= weatherInfo.Headline.Text;
+                dto.Category= weatherInfo.Headline.Category;
+                dto.EndDate= weatherInfo.Headline.EndDate;
+                dto.EndEpochDate= weatherInfo.Headline.EndEpochDate;
 
-                    weatherInfo.Headline.MobileLink = dto.MobileLink;
-                    weatherInfo.Headline.Link = dto.Link;
+                dto.MobileLink= weatherInfo.Headline.MobileLink;
+                dto.Link= weatherInfo.Headline.Link;
 
-                    weatherInfo.DailyForecasts[0].Date = dto.DailyForecastsDay;
-                    weatherInfo.DailyForecasts[0].EpochDate = dto.DailyForecastsEpochDate;
+                dto.DailyForecastsDay= weatherInfo.DailyForecasts[0].Date ;
+                dto.DailyForecastsEpochDate= weatherInfo.DailyForecasts[0].EpochDate ;
 
-                    weatherInfo.DailyForecasts[0].Temperature.Minimum.Value = dto.TempMinValue;
+                dto.TempMinValue= weatherInfo.DailyForecasts[0].Temperature.Minimum.Value;
                     weatherInfo.DailyForecasts[0].Temperature.Minimum.Unit = dto.TempMinUnit;
                     weatherInfo.DailyForecasts[0].Temperature.Minimum.UnitType = dto.TempMinUnitType;
 

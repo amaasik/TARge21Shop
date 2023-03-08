@@ -15,6 +15,7 @@ builder.Services.AddDbContext<TARge21ShopContext>(options =>
 builder.Services.AddScoped<ISpaceshipsServices, SpaceshipsServices>();
 builder.Services.AddScoped<IFilesServices, FilesServices>();
 builder.Services.AddScoped<IRealEstatesServices, RealEstatesServices>();
+builder.Services.AddScoped<IWeatherForecastServices, WeatherForecastServices>();
 
 
 var app = builder.Build();

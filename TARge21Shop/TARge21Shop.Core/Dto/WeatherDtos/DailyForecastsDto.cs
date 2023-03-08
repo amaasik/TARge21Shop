@@ -1,5 +1,8 @@
-﻿public class DailyForecastsDto
+﻿using System.Text.Json.Serialization;
+
+public class DailyForecastsDto
 {
+    [JsonPropertyName("Date")]
     public DateTime Date { get; set; }
     public int EpochDate { get; set; }
     public Temperature Temperature { get; set; }
