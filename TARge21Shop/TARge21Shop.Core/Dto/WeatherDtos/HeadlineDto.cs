@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace TARge21Shop.Core.Dto.WeatherDtos
 {
-
     public class HeadlineDto
     {
-
         [JsonPropertyName("EffectiveDate")]
         public DateTime EffectiveDate { get; set; }
 
@@ -37,12 +30,5 @@ namespace TARge21Shop.Core.Dto.WeatherDtos
 
         [JsonPropertyName("Link")]
         public string Link { get; set; }
-
-
-        public Temperature Temperature { get; set; }
-        public Day Day { get; set; }
-        public Night Night { get; set; }
-        public List<string> Sources { get; set; }
     }
 }
-

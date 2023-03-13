@@ -2,8 +2,6 @@
 {
     public class WeatherResultDto
     {
-        public bool DayHasPrecipitation;
-
         public DateTime EffectiveDate { get; set; }
         public int EffectiveEpochDate { get; set; }
         public int Severity { get; set; }
@@ -15,8 +13,6 @@
         public string MobileLink { get; set; }
         public string Link { get; set; }
 
-        public DateTime DailyForecastsDay { get; set; }
-        public int DailyForecastsEpochDate { get; set; }
 
         public double TempMinValue { get; set; }
         public string TempMinUnit { get; set; }
@@ -27,8 +23,8 @@
         public int TempMaxUnitType { get; set; }
 
         public int DayIcon { get; set; }
-        public bool DayHasPercipitation { get; set; }
         public string DayIconPhrase { get; set; }
+        public bool DayHasPercipitation { get; set; }
         public string DayPrecipitationType { get; set; }
         public string DayPrecipitationIntensity { get; set; }
 
