@@ -1,11 +1,6 @@
 ﻿using Nancy.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Newtonsoft.Json;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using TARge21Shop.Core.Dto;
 using TARge21Shop.Core.Dto.WeatherDtos;
 using TARge21Shop.Core.ServiceInterface;
 
@@ -19,9 +14,8 @@ namespace TARge21Shop.ApplicationServices.Services
             string apikey = "qtPfgAahJibfaWqT9zbupu8qaAxrvIZ2";
             var url = $"http://dataservice.accuweather.com/forecasts/v1/daily/1day/127964?apikey=qtPfgAahJibfaWqT9zbupu8qaAxrvIZ2=true";
 
-            
 
-                using (WebClient client = new WebClient())
+            using (WebClient client = new WebClient())
                 {
                 string json = client.DownloadString(url);
 
@@ -61,6 +55,29 @@ namespace TARge21Shop.ApplicationServices.Services
             }
 
                 return dto;
+        }
+        public async Task<OpenWeatherResultDto> OpenWeatherDetail(OpenWeatherResultDto dto)
+        {
+            var url = $"https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid=17da7f666231208711eb1489320b6df4";
+            using (WebClient client = new WebClient())
+            {
+                
+                string json = client.DownloadString(url);
+                var result = new JavaScriptSerializer().Deserialize<OpenWeatherDto>(json);
+
+                dto.Timezone = result.Timezone;
+                dto.Name = result.Name;
+                dto.Lon = result.Coord.Lon;
+                dto.Lat = result.Coord.Lat;
+                dto.Temp = Math.Round(result.Main.Temp - 272.15, 2);
+                dto.Feels_like = Math.Round(result.Main.Feels_like - 272.15, 2);
+                dto.Pressure = result.Main.Pressure;
+                dto.Humidity = result.Main.Humidity;
+                dto.Main = result.Weather[0].Main;
+                dto.Description = result.Weather[0].Description;
+                dto.Speed = result.Wind.Speed;
+            }
+            return dto;
         }
     }
 }
